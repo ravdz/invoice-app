@@ -45,4 +45,15 @@ const invoiceData = computed(() => {
     }
 })
 
+useHead({
+    title: `InvoiceApp - #${id}`,
+    meta: [{
+        name: 'description',
+        content: `Details of #${id} invoice`
+    }, {
+        name: 'robots',
+        content: 'noindex, nofollow'
+    }]
+})
+
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded-md pt-3.5 pb-2.5 px-8 bg-opacity-5 flex justify-center items-center" :class="status.classes">
+    <div class="rounded-md pt-3.5 pb-2.5 px-8 !bg-opacity-5 flex justify-center items-center" :class="status.classes">
         <div class="w-2 h-2 rounded-full mr-2 mb-1" :class="status.classes" /> <span class="text-inherit text-sm leading-3 -tracking-sm">{{ status.label }}</span>
     </div>
 </template>
@@ -36,7 +36,7 @@ const status = computed(() => {
     case 2: {
         return {
             label: 'Draft',
-            classes: 'text-black-400 bg-black-400'
+            classes: 'text-black-400 bg-black-400 dark:bg-blue-100 dark:text-blue-100'
         }
     }
     default: {

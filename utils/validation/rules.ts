@@ -1,6 +1,7 @@
 import {
     helpers,
     required as requiredVuelidate,
+    requiredIf as requiredIfVuelidate,
     email as emailVuelidate,
     integer as integerVuelidate,
     decimal as decimalVuelidate,
@@ -12,6 +13,10 @@ import {
 
 export const required = (message?: string) => {
     return helpers.withMessage(message || 'can\'t be empty', requiredVuelidate)
+}
+
+export const requiredIf = (value: boolean, message?: string) => {
+    return helpers.withMessage(message || 'can\'t be empty', requiredIfVuelidate(value))
 }
 
 export const email = helpers.withMessage(
