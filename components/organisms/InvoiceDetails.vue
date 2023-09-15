@@ -6,21 +6,21 @@
                     <span class="text-blue-300">#</span>{{ invoiceData.id }}
                 </Heading>
                 <Text tag="span" class="text-blue-300 dark:text-blue-100 leading-3">
-                    {{ invoiceData.description }}
+                    {{ description }}
                 </Text>
             </div>
             <div class="flex flex-col justify-start items-start">
                 <Text tag="span" class="text-blue-300 dark:text-blue-100">
-                    {{ invoiceData.fromStreet }}
+                    {{ fromStreet }}
                 </Text>
                 <Text tag="span" class="text-blue-300 dark:text-blue-100">
-                    {{ invoiceData.fromCity }}
+                    {{ fromCity }}
                 </Text>
                 <Text tag="span" class="text-blue-300 dark:text-blue-100">
-                    {{ invoiceData.fromZip }}
+                    {{ fromZip }}
                 </Text>
                 <Text tag="span" class="text-blue-300 dark:text-blue-100">
-                    {{ invoiceData.fromCountry }}
+                    {{ fromCountry }}
                 </Text>
             </div>
         </div>
@@ -46,19 +46,19 @@
                     Bill to
                 </Text>
                 <Heading tag="span" size="s" class="leading-4.5 mb-2 block">
-                    {{ invoiceData.toClientName }}
+                    {{ toClientName }}
                 </Heading>
                 <Text tag="span" class="text-blue-300 dark:text-blue-100 block">
-                    {{ invoiceData.toStreet }}
+                    {{ toStreet }}
                 </Text>
                 <Text tag="span" class="text-blue-300 dark:text-blue-100 block">
-                    {{ invoiceData.toCity }}
+                    {{ toCity }}
                 </Text>
                 <Text tag="span" class="text-blue-300 dark:text-blue-100 block">
-                    {{ invoiceData.toZip }}
+                    {{ toZip }}
                 </Text>
                 <Text tag="span" class="text-blue-300 dark:text-blue-100 block">
-                    {{ invoiceData.toCountry }}
+                    {{ toCountry }}
                 </Text>
             </div>
             <div class="basis-full md:basis-1/3 mt-8 md:mt-0">
@@ -66,12 +66,12 @@
                     Sent to
                 </Text>
                 <Heading tag="span" size="s" class="leading-4.5 block">
-                    {{ invoiceData.toClientEmail }}
+                    {{ toClientEmail }}
                 </Heading>
             </div>
         </div>
 
-        <DetailItemList :items="invoiceData.items" />
+        <DetailItemList v-if="invoiceData.items.length" :items="invoiceData.items" />
     </div>
 </template>
 
@@ -100,12 +100,33 @@ invoiceData: InvoiceWithId
 
 const props = defineProps<Props>()
 
-const invoiceDate = computed(() => dayjs(props.invoiceData.invoiceDate).format('DD MMM YYYY'))
+const description = computed(() => props.invoiceData.description || 'Unknown')
+const fromCity = computed(() => props.invoiceData.fromCity || 'Unknown')
+const toCity = computed(() => props.invoiceData.toCity || 'Unknown')
+const toClientEmail = computed(() => props.invoiceData.toClientEmail || 'Unknown')
+const toClientName = computed(() => props.invoiceData.toClientName || 'Unknown')
+const toCountry = computed(() => props.invoiceData.toCountry || 'Unknown')
+const toStreet = computed(() => props.invoiceData.toStreet || 'Unknown')
+const toZip = computed(() => props.invoiceData.toZip || 'Unknown')
+const fromCountry = computed(() => props.invoiceData.fromCountry || 'Unknown')
+const fromStreet = computed(() => props.invoiceData.fromStreet || 'Unknown')
+const fromZip = computed(() => props.invoiceData.fromZip || 'Unknown')
+const invoiceDate = computed(() => {
+    if (props.invoiceData.invoiceDate) {
+        return dayjs(props.invoiceData.invoiceDate).format('DD MMM YYYY')
+    } else {
+        return 'Unknown'
+    }
+})
 
 const paymentDue = computed(() => {
     const daysNumber = props.invoiceData.paymentTerms
-    const paymentDate = dayjs(invoiceDate.value).add(daysNumber || 0, 'day')
-    return dayjs(paymentDate).format('DD MMM YYYY')
+    if (!!daysNumber && !!invoiceDate.value) {
+        const paymentDate = dayjs(invoiceDate.value).add(daysNumber || 0, 'day')
+        return dayjs(paymentDate).format('DD MMM YYYY')
+    } else {
+        return 'Unknown'
+    }
 })
 
 </script>

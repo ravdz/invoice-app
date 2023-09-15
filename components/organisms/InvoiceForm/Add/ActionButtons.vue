@@ -6,7 +6,7 @@
             Discard
         </Button>
         <div class="flex items-center">
-            <Button :variant="4" class="mr-2" @click="triggerCloseSidebar">
+            <Button :variant="4" class="mr-2" @click="triggerDraft">
                 Save as Draft
             </Button>
             <Button :variant="2" @click="triggerSubmit">
@@ -26,7 +26,7 @@ export default {
 <script setup lang="ts">
 import Button from '@/components/atoms/Button.vue'
 
-const emit = defineEmits(['close', 'submit'])
+const emit = defineEmits(['close', 'submit', 'draft'])
 
 const triggerCloseSidebar = () => {
     emit('close')
@@ -35,4 +35,9 @@ const triggerCloseSidebar = () => {
 const triggerSubmit = () => {
     emit('submit')
 }
+
+const triggerDraft = () => {
+    emit('draft')
+}
+
 </script>

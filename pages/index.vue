@@ -44,4 +44,15 @@ const openSidebar = () => {
     changeInvoiceSidebarVisibility(true)
 }
 
+useHead({
+    title: 'InvoiceApp',
+    meta: [{
+        name: 'description',
+        content: 'Your invoice list'
+    }, {
+        name: 'robots',
+        content: 'noindex, nofollow'
+    }]
+})
+
 </script>

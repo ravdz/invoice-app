@@ -13,7 +13,7 @@
             <Button :variant="5" class="mr-2" @click="openDeleteInvoiceModal">
                 Delete
             </Button>
-            <Button :variant="2" @click="changeStatus">
+            <Button v-if="isNotDraft" :variant="2" @click="changeStatus">
                 {{ changeStatusBtnLabel }}
             </Button>
         </div>
@@ -57,6 +57,8 @@ const changeStatusBtnLabel = computed(() => {
     }
     return 'Mark as pending'
 })
+
+const isNotDraft = computed(() => props.invoiceData.status !== 2)
 
 const editInvoice = () => {
     changeInvoiceSidebarVisibility(true, props.invoiceData)

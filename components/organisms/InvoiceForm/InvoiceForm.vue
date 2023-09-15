@@ -23,7 +23,9 @@
                         name="fromStreet"
                         class="mt-6"
                         :error-message="
-                            v.fromStreet.$errors.length ? v.fromStreet.$errors[0].$message : null
+                            v.fromStreet.$errors.length
+                                ? v.fromStreet.$errors[0].$message
+                                : null
                         "
                     />
                     <div
@@ -35,7 +37,9 @@
                             name="fromCity"
                             class="basis-1/2 md:basis-auto pr-3 md:pr-0"
                             :error-message="
-                                v.fromCity.$errors.length ? v.fromCity.$errors[0].$message : null
+                                v.fromCity.$errors.length
+                                    ? v.fromCity.$errors[0].$message
+                                    : null
                             "
                         />
                         <Input
@@ -53,7 +57,9 @@
                             name="fromCountry"
                             class="basis-full md:basis-auto mt-6 md:mt-0"
                             :error-message="
-                                v.fromCountry.$errors.length ? v.fromCountry.$errors[0].$message : null
+                                v.fromCountry.$errors.length
+                                    ? v.fromCountry.$errors[0].$message
+                                    : null
                             "
                         />
                     </div>
@@ -73,7 +79,9 @@
                         name="toClientName"
                         class="mt-6"
                         :error-message="
-                            v.toClientName.$errors.length ? v.toClientName.$errors[0].$message : null
+                            v.toClientName.$errors.length
+                                ? v.toClientName.$errors[0].$message
+                                : null
                         "
                     />
                     <Input
@@ -82,8 +90,9 @@
                         name="toClientEmail"
                         class="mt-6"
                         :error-message="
-                            v.toClientEmail.$errors.length ?
-                                v.toClientEmail.$errors[0].$message : null
+                            v.toClientEmail.$errors.length
+                                ? v.toClientEmail.$errors[0].$message
+                                : null
                         "
                     />
                     <Input
@@ -122,7 +131,9 @@
                             name="toCountry"
                             class="basis-full md:basis-auto mt-6 md:mt-0"
                             :error-message="
-                                v.toCountry.$errors.length ? v.toCountry.$errors[0].$message : null
+                                v.toCountry.$errors.length
+                                    ? v.toCountry.$errors[0].$message
+                                    : null
                             "
                         />
                     </div>
@@ -133,7 +144,9 @@
                             name="invoiceDate"
                             class="md:pr-3 basis-full md:basis-1/2"
                             :error-message="
-                                v.invoiceDate.$errors.length ? v.invoiceDate.$errors[0].$message : null
+                                v.invoiceDate.$errors.length
+                                    ? v.invoiceDate.$errors[0].$message
+                                    : null
                             "
                         />
                         <Dropdown
@@ -143,8 +156,9 @@
                             :options="paymentTermsOptions"
                             class="md:pl-3 mt-6 md:mt-0 basis-full md:basis-1/2"
                             :error-message="
-                                v.paymentTerms.$errors.length ?
-                                    v.paymentTerms.$errors[0].$message : null
+                                v.paymentTerms.$errors.length
+                                    ? v.paymentTerms.$errors[0].$message
+                                    : null
                             "
                         />
                     </div>
@@ -154,7 +168,9 @@
                         name="description"
                         class="mt-6"
                         :error-message="
-                            v.description.$errors.length ? v.description.$errors[0].$message : null
+                            v.description.$errors.length
+                                ? v.description.$errors[0].$message
+                                : null
                         "
                     />
                 </div>
@@ -174,19 +190,24 @@
             <div class="basis-full self-end">
                 <div
                     style="
-          background: linear-gradient(
-            180deg,
-            rgba(0, 0, 0, 0) 0%,
-            rgba(0, 0, 0, 0.1) 100%
-          );
-        "
+            background: linear-gradient(
+              180deg,
+              rgba(0, 0, 0, 0) 0%,
+              rgba(0, 0, 0, 0.1) 100%
+            );
+          "
                     class="h-16 w-full md:hidden"
                 />
-                <EditActionButtons v-if="isEditMode" @close="triggerCloseSidebar" @submit="triggerValidate" />
+                <EditActionButtons
+                    v-if="isEditMode"
+                    @close="triggerCloseSidebar"
+                    @submit="triggerUpdateInvoice"
+                />
                 <AddActionButtons
                     v-else
                     @close="triggerCloseSidebar"
-                    @submit="triggerValidate"
+                    @draft="triggerSaveAsDraft"
+                    @submit="triggerAddInvoice"
                 />
             </div>
         </div>
@@ -224,11 +245,7 @@ import {
     decimal,
     minNumber
 } from '@/utils/validation/rules'
-import {
-    FormItem,
-    Invoice,
-    IUpdateItem
-} from '@/interfaces/invoice-form'
+import { FormItem, Invoice, IUpdateItem, InvoiceStatus } from '@/interfaces/invoice-form'
 import { Option } from '@/interfaces/dropdown'
 
 const emit = defineEmits(['close'])
@@ -264,6 +281,14 @@ const invoiceForm = ref<Invoice>({
 })
 
 const isEditMode = computed(() => !!invoiceId.value)
+
+const invoiceStatus = computed(() => {
+    if (typeof invoiceData?.status === 'number' && Object.values(InvoiceStatus).includes(invoiceData.status)) {
+        return invoiceData.status as InvoiceStatus
+    } else {
+        return 2
+    }
+})
 
 const invoiceFormSchema = computed(() => ({
     fromStreet: {
@@ -357,24 +382,43 @@ const triggerCloseSidebar = () => {
     emit('close')
 }
 
-const triggerValidate = async () => {
+const triggerUpdateInvoice = async () => {
     try {
         const isValid = await v.value.$validate()
         if (isValid) {
-            if (isEditMode.value) {
-                updateInvoice(invoiceId.value, invoiceForm.value)
-            } else {
-                addInvoice(invoiceForm.value)
-            }
+            const updatedInvoice = { ...invoiceForm.value, status: invoiceStatus.value === 2 ? 1 : invoiceStatus.value }
+            updateInvoice(invoiceId.value, updatedInvoice)
             triggerCloseSidebar()
         }
-    } catch (error: any) {
+    } catch (error:any) {
+        console.error(error)
+    }
+}
+
+const triggerAddInvoice = async () => {
+    try {
+        const isValid = await v.value.$validate()
+        if (isValid) {
+            addInvoice(invoiceForm.value, 1)
+            triggerCloseSidebar()
+        }
+    } catch (error:any) {
+        console.error(error)
+    }
+}
+
+const triggerSaveAsDraft = () => {
+    try {
+        v.value.$reset()
+        addInvoice(invoiceForm.value, 2)
+        triggerCloseSidebar()
+    } catch (error:any) {
         console.error(error)
     }
 }
 
 const addItem = (newItem: FormItem) => {
-    invoiceForm.value.items.push(newItem)
+    invoiceForm.value.items = [...invoiceForm.value.items, newItem]
 }
 
 const removeItem = (itemId: string) => {

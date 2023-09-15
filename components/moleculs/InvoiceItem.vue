@@ -9,14 +9,14 @@
             <span
                 class="text-blue-300 dark:text-blue-100 text-xs leading-3 -tracking-xs"
             >
-                {{ invoiceData.invoiceDate }}
+                {{ invoiceDate }}
             </span>
         </div>
         <div class="invoice-item__client-wrapper">
             <span
                 class="text-blue-300 dark:text-white-0  text-xs leading-3 -tracking-xs"
             >
-                {{ invoiceData.toClientName }}
+                {{ toClientName }}
             </span>
         </div>
         <div class="invoice-item__price-wrapper">
@@ -41,6 +41,7 @@ export default {
 </script>
 
 <script setup lang="ts">
+import * as dayjs from 'dayjs'
 import StatusBadge from '@/components/atoms/StatusBadge.vue'
 import Heading from '@/components/atoms/Heading.vue'
 import { Invoice, InvoiceStatus, FormItem } from '@/interfaces/invoice-form'
@@ -56,6 +57,16 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+
+const invoiceDate = computed(() => {
+    if (props.invoiceData.invoiceDate) {
+        return dayjs(props.invoiceData.invoiceDate).format('DD MMM YYYY')
+    } else {
+        return 'Unknown'
+    }
+})
+
+const toClientName = computed(() => props.invoiceData.toClientName || 'Unknown')
 
 const amountDue = computed(() => {
     const allPrices = props.invoiceData.items.map(({ price, quantity } : FormItem) => {

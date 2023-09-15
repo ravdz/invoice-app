@@ -18,8 +18,8 @@ export const invoicesStore = defineStore('invoices', {
         }
     },
     actions: {
-        addInvoice (newInvoice: Invoice) {
-            const invoice = { ...newInvoice, id: generateUniqueID(), status: 1 }
+        addInvoice (newInvoice: Invoice, status: InvoiceStatus) {
+            const invoice = { ...newInvoice, id: generateUniqueID(), status }
             this.invoices.push(invoice)
         },
         updateInvoice (invoiceId: string, invoiceForm: InvoiceDataOptionals) {

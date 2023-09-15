@@ -48,5 +48,5 @@ export interface InvoiceOptionals {
   invoiceDate?: number | null;
   paymentTerms?: number | null;
   description?: string;
-  items?: FormItem[];
+  items?: FormItem[] | [];
 }
