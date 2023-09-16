@@ -83,7 +83,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import * as dayjs from 'dayjs'
+// import * as dayjs from 'dayjs'
 import Text from '@/components/atoms/Text.vue'
 import Heading from '@/components/atoms/Heading.vue'
 import DetailItemList from '@/components/organisms/DetailItemList.vue'
