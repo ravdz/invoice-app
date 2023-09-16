@@ -113,7 +113,8 @@ const fromStreet = computed(() => props.invoiceData.fromStreet || 'Unknown')
 const fromZip = computed(() => props.invoiceData.fromZip || 'Unknown')
 const invoiceDate = computed(() => {
     if (props.invoiceData.invoiceDate) {
-        return dayjs(props.invoiceData.invoiceDate).format('DD MMM YYYY')
+        // return dayjs(props.invoiceData.invoiceDate).format('DD MMM YYYY')
+        return props.invoiceData.invoiceDate
     } else {
         return 'Unknown'
     }
@@ -122,8 +123,9 @@ const invoiceDate = computed(() => {
 const paymentDue = computed(() => {
     const daysNumber = props.invoiceData.paymentTerms
     if (!!daysNumber && !!invoiceDate.value) {
-        const paymentDate = dayjs(invoiceDate.value).add(daysNumber || 0, 'day')
-        return dayjs(paymentDate).format('DD MMM YYYY')
+        // const paymentDate = dayjs(invoiceDate.value).add(daysNumber || 0, 'day')
+        // return dayjs(paymentDate).format('DD MMM YYYY')
+        return invoiceDate.value
     } else {
         return 'Unknown'
     }

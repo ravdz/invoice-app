@@ -121,7 +121,8 @@ const datePickerTriggerClasses = computed(() => {
 const date = computed({
     get () {
         if (props.modelValue) {
-            return dayjs(props.modelValue).valueOf()
+            return props.modelValue
+            // return dayjs(props.modelValue).valueOf()
         }
         return ''
     },
