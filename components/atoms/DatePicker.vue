@@ -62,7 +62,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import * as dayjs from 'dayjs'
+// import * as dayjs from 'dayjs'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import { twMerge } from 'tailwind-merge'
 import CalendarIcon from '@/assets/svg/calendar-icon.svg'

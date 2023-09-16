@@ -41,7 +41,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import * as dayjs from 'dayjs'
+// import * as dayjs from 'dayjs'
 import StatusBadge from '@/components/atoms/StatusBadge.vue'
 import Heading from '@/components/atoms/Heading.vue'
 import { Invoice, InvoiceStatus, FormItem } from '@/interfaces/invoice-form'
