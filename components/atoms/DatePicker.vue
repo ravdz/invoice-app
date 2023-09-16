@@ -84,6 +84,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(['update:modelValue'])
 
+const { $dayjs } = useNuxtApp()
+
 const attrs = useAttrs()
 
 const isOpen = ref<boolean>(false)
@@ -121,8 +123,7 @@ const datePickerTriggerClasses = computed(() => {
 const date = computed({
     get () {
         if (props.modelValue) {
-            return props.modelValue
-            // return dayjs(props.modelValue).valueOf()
+            return $dayjs(props.modelValue).valueOf()
         }
         return ''
     },
