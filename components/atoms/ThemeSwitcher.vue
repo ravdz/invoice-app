@@ -33,6 +33,8 @@ import SunIcon from '@/assets/svg/sun-icon.svg'
 
 const colorMode = useColorMode()
 
+console.log(colorMode)
+
 const isThemeDark = computed(() => colorMode.preference === 'dark')
 const isThemeLight = computed(() => colorMode.preference === 'light')
 </script>
