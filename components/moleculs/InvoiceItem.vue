@@ -60,7 +60,8 @@ const props = defineProps<Props>()
 
 const invoiceDate = computed(() => {
     if (props.invoiceData.invoiceDate) {
-        return dayjs(props.invoiceData.invoiceDate).format('DD MMM YYYY')
+        // return dayjs(props.invoiceData.invoiceDate).format('DD MMM YYYY')
+        return props.invoiceData.invoiceDate
     } else {
         return 'Unknown'
     }
