@@ -4,7 +4,7 @@
             v-if="isThemeLight"
             class="flex justify-center items-center"
             type="button"
-            @click="colorMode.preference = 'dark'"
+            @click="$colorMode.preference = 'dark'"
         >
             <MoonIcon :filled="true" />
         </button>
@@ -13,7 +13,7 @@
             v-if="isThemeDark"
             class="flex justify-center items-center"
             type="button"
-            @click="colorMode.preference = 'light'"
+            @click="$colorMode.preference = 'light'"
         >
             <SunIcon :filled="true" />
         </button>
