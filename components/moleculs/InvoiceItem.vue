@@ -41,7 +41,6 @@ export default {
 </script>
 
 <script setup lang="ts">
-// import * as dayjs from 'dayjs'
 import StatusBadge from '@/components/atoms/StatusBadge.vue'
 import Heading from '@/components/atoms/Heading.vue'
 import { Invoice, InvoiceStatus, FormItem } from '@/interfaces/invoice-form'
@@ -58,10 +57,11 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const { $dayjs } = useNuxtApp()
+
 const invoiceDate = computed(() => {
     if (props.invoiceData.invoiceDate) {
-        // return dayjs(props.invoiceData.invoiceDate).format('DD MMM YYYY')
-        return props.invoiceData.invoiceDate
+        return $dayjs(props.invoiceData.invoiceDate).format('DD MMM YYYY')
     } else {
         return 'Unknown'
     }

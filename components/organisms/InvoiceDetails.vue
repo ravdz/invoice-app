@@ -100,6 +100,8 @@ invoiceData: InvoiceWithId
 
 const props = defineProps<Props>()
 
+const { $dayjs } = useNuxtApp()
+
 const description = computed(() => props.invoiceData.description || 'Unknown')
 const fromCity = computed(() => props.invoiceData.fromCity || 'Unknown')
 const toCity = computed(() => props.invoiceData.toCity || 'Unknown')
@@ -113,8 +115,7 @@ const fromStreet = computed(() => props.invoiceData.fromStreet || 'Unknown')
 const fromZip = computed(() => props.invoiceData.fromZip || 'Unknown')
 const invoiceDate = computed(() => {
     if (props.invoiceData.invoiceDate) {
-        // return dayjs(props.invoiceData.invoiceDate).format('DD MMM YYYY')
-        return props.invoiceData.invoiceDate
+        return $dayjs(props.invoiceData.invoiceDate).format('DD MMM YYYY')
     } else {
         return 'Unknown'
     }
@@ -123,9 +124,8 @@ const invoiceDate = computed(() => {
 const paymentDue = computed(() => {
     const daysNumber = props.invoiceData.paymentTerms
     if (!!daysNumber && !!invoiceDate.value) {
-        // const paymentDate = dayjs(invoiceDate.value).add(daysNumber || 0, 'day')
-        // return dayjs(paymentDate).format('DD MMM YYYY')
-        return invoiceDate.value
+        const paymentDate = $dayjs(invoiceDate.value).add(daysNumber || 0, 'day')
+        return $dayjs(paymentDate).format('DD MMM YYYY')
     } else {
         return 'Unknown'
     }

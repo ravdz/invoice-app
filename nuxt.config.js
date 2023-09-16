@@ -39,5 +39,5 @@ export default defineNuxtConfig({
     colorMode: {
         classSuffix: ''
     },
-    plugins: ['~/plugins/clickOutside.js']
+    plugins: ['~/plugins/dayjs.js', '~/plugins/clickOutside.js']
 })
