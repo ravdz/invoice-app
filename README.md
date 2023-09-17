@@ -8,13 +8,21 @@ This is an invoice app that allow user to:
 * Toggle light and dark mode
 * Save invoices in browser's localstorage
 
+## Stack
+
+* Nuxt v3.6
+* Typescript
+* Tailwind
+* Pinia
+* Vuelidate
+
 ## Setup
 
 Make sure to install the dependencies:
 
 ```bash
 # npm
-npm i
+npm install
 ```
 
 ## Development Server
