@@ -231,11 +231,11 @@ import Heading from '@/components/atoms/Heading.vue'
 import Input from '@/components/atoms/Input.vue'
 import DatePicker from '@/components/atoms/DatePicker.vue'
 import Dropdown from '@/components/atoms/Dropdown.vue'
-import FormItemList from '@/components/organisms/FormItemList.vue'
-import EditActionButtons from '@/components/organisms/InvoiceForm/Edit/ActionButtons.vue'
-import AddActionButtons from '@/components/organisms/InvoiceForm/Add/ActionButtons.vue'
-import EditHeader from '@/components/organisms/InvoiceForm/Edit/Header.vue'
-import AddHeader from '@/components/organisms/InvoiceForm/Add/Header.vue'
+import FormItemList from '@/components/organisms/InvoiceForm/partials/FormItemList.vue'
+import EditActionButtons from '@/components/organisms/InvoiceForm/partials/Edit/ActionButtons.vue'
+import AddActionButtons from '@/components/organisms/InvoiceForm/partials/Add/ActionButtons.vue'
+import EditHeader from '@/components/organisms/InvoiceForm/partials/Edit/Header.vue'
+import AddHeader from '@/components/organisms/InvoiceForm/partials/Add/Header.vue'
 import {
     maxLength,
     minLength,
@@ -250,7 +250,7 @@ import { Option } from '@/interfaces/dropdown'
 
 const emit = defineEmits(['close'])
 
-const { addInvoice, updateInvoice } = invoicesStore()
+const invoicesStoreRef = invoicesStore()
 const { invoiceSidebar: { invoiceData } } = sidebarsStore()
 
 const paymentTermsOptions = ref<Option[]>([
@@ -387,7 +387,7 @@ const triggerUpdateInvoice = async () => {
         const isValid = await v.value.$validate()
         if (isValid) {
             const updatedInvoice = { ...invoiceForm.value, status: invoiceStatus.value === 2 ? 1 : invoiceStatus.value }
-            updateInvoice(invoiceId.value, updatedInvoice)
+            invoicesStoreRef.updateInvoice(invoiceId.value, updatedInvoice)
             triggerCloseSidebar()
         }
     } catch (error:any) {
@@ -399,7 +399,7 @@ const triggerAddInvoice = async () => {
     try {
         const isValid = await v.value.$validate()
         if (isValid) {
-            addInvoice(invoiceForm.value, 1)
+            invoicesStoreRef.addInvoice(invoiceForm.value, 1)
             triggerCloseSidebar()
         }
     } catch (error:any) {
@@ -410,7 +410,7 @@ const triggerAddInvoice = async () => {
 const triggerSaveAsDraft = () => {
     try {
         v.value.$reset()
-        addInvoice(invoiceForm.value, 2)
+        invoicesStoreRef.addInvoice(invoiceForm.value, 2)
         triggerCloseSidebar()
     } catch (error:any) {
         console.error(error)

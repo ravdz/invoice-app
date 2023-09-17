@@ -37,9 +37,9 @@ invoiceData: InvoiceWithId
 
 const props = defineProps<Props>()
 
-const { updateInvoice } = invoicesStore()
-const { changeDeleteInvoiceModalVisibility } = modalsStore()
-const { changeInvoiceSidebarVisibility } = sidebarsStore()
+const invoicesStoreRef = invoicesStore()
+const modalsStoreRef = modalsStore()
+const sidebarsStoreRef = sidebarsStore()
 
 const changeStatusBtnLabel = computed(() => {
     if (props.invoiceData.status === 1) {
@@ -51,17 +51,17 @@ const changeStatusBtnLabel = computed(() => {
 const isNotDraft = computed(() => props.invoiceData.status !== 2)
 
 const editInvoice = () => {
-    changeInvoiceSidebarVisibility(true, props.invoiceData)
+    sidebarsStoreRef.changeInvoiceSidebarVisibility(true, props.invoiceData)
 }
 
 const changeStatus = () => {
     const { id, status } = props.invoiceData
     const newStatus = status === 1 ? 0 : 1
-    updateInvoice(id, { status: newStatus })
+    invoicesStoreRef.updateInvoice(id, { status: newStatus })
 }
 
 const openDeleteInvoiceModal = () => {
-    changeDeleteInvoiceModalVisibility(true)
+    modalsStoreRef.changeDeleteInvoiceModalVisibility(true)
 }
 
 </script>

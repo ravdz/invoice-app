@@ -33,13 +33,13 @@
 
 <script lang="ts">
 export default {
-    name: 'DetailList',
+    name: 'DetailItemList',
     inheritAttrs: false
 }
 </script>
 
 <script setup lang="ts">
-import DetailsItem from '@/components/moleculs/DetailsItem.vue'
+import DetailsItem from '@/components/organisms/DetailItemList/partials/DetailsItem.vue'
 import Text from '@/components/atoms/Text.vue'
 import Heading from '@/components/atoms/Heading.vue'
 import { FormItem } from '@/interfaces/invoice-form'
