@@ -59,7 +59,7 @@ export default {
 
 <script setup lang="ts">
 import { v4 as uuidv4 } from 'uuid'
-import FormItem from '@/components/moleculs/FormItem.vue'
+import FormItem from '@/components/organisms/InvoiceForm/partials/FormItem.vue'
 import Heading from '@/components/atoms/Heading.vue'
 import Text from '@/components/atoms/Text.vue'
 import Button from '@/components/atoms/Button.vue'

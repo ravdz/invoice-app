@@ -11,6 +11,7 @@
                     </Text>
                 </div>
                 <div class="flex justify-center items-center">
+                    <StatusFilter />
                     <Button :variant="1" @click="openSidebar">
                         <span class="md:hidden text-inherit">New</span>
                         <span class="hidden md:block text-inherit">New Invoice</span>
@@ -29,19 +30,20 @@ import InvoiceList from '@/components/organisms/InvoiceList.vue'
 import Heading from '@/components/atoms/Heading.vue'
 import Text from '@/components/atoms/Text.vue'
 import Button from '@/components/atoms/Button.vue'
+import StatusFilter from '@/components/moleculs/StatusFilter/StatusFilter.vue'
 
-const { invoices } = invoicesStore()
-const { changeInvoiceSidebarVisibility } = sidebarsStore()
+const invoicesStoreRef = invoicesStore()
+const sidebarsStoreRef = sidebarsStore()
 
 const subtitle = computed(() => {
-    if (invoices.length) {
-        return `There are ${invoices.length} total invoices`
+    if (invoicesStoreRef.filteredInvoices.length) {
+        return `There are ${invoicesStoreRef.filteredInvoices.length} total invoices`
     }
     return 'No invoices'
 })
 
 const openSidebar = () => {
-    changeInvoiceSidebarVisibility(true)
+    sidebarsStoreRef.changeInvoiceSidebarVisibility(true)
 }
 
 useHead({

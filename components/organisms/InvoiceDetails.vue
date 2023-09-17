@@ -86,7 +86,7 @@ export default {
 // import * as dayjs from 'dayjs'
 import Text from '@/components/atoms/Text.vue'
 import Heading from '@/components/atoms/Heading.vue'
-import DetailItemList from '@/components/organisms/DetailItemList.vue'
+import DetailItemList from '@/components/organisms/DetailItemList/DetailItemList.vue'
 import { Invoice, InvoiceStatus } from '@/interfaces/invoice-form'
 
 interface InvoiceWithId extends Invoice {

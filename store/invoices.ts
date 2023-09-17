@@ -14,7 +14,8 @@ interface InvoiceData extends Invoice {
 export const invoicesStore = defineStore('invoices', {
     state: () => {
         return {
-            invoices: [] as InvoiceData[]
+            invoices: [] as InvoiceData[],
+            filterBy: [] as InvoiceStatus[]
         }
     },
     actions: {
@@ -37,9 +38,27 @@ export const invoicesStore = defineStore('invoices', {
         deleteInvoice (invoiceId: string) {
             const invoices = this.invoices.filter(invoice => invoice.id !== invoiceId)
             this.invoices = invoices
+        },
+        changeFilters (status: InvoiceStatus) {
+            if (this.filterBy.includes(status)) {
+                this.filterBy = this.filterBy.filter(statusItem => statusItem !== status)
+            } else {
+                this.filterBy = [...this.filterBy, status]
+            }
         }
     },
-
+    getters: {
+        filteredInvoices: (state) => {
+            const { invoices, filterBy } = state
+            if (!filterBy.length) return invoices
+            const results = invoices.filter((invoice) => {
+                const invoiceMatch = filterBy.includes(invoice.status)
+                if (invoiceMatch) return invoice
+                return false
+            })
+            return results
+        }
+    },
     persist: {
         storage: persistedState.localStorage
     }
