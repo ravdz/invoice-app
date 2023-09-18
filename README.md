@@ -19,11 +19,11 @@ This is an invoice app that allow user to:
 
 ## Stack
 
-* Nuxt v3.6
-* Typescript
-* Tailwind
-* Pinia
-* Vuelidate
+- Nuxt v3.6
+- Typescript
+- Tailwind
+- Pinia
+- Vuelidate
 
 ## Setup
 
