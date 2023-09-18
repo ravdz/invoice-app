@@ -1,12 +1,12 @@
 <template>
     <div class="w-full flex justify-end items-center md:hidden bg-white-0 dark:bg-black-600 py-5 px-6 shadow-sm">
-        <Button :variant="3" class="mr-2" @click="editInvoice">
+        <Button :variant="3" class="mr-2" aria-label="Edit" @click="editInvoice">
             Edit
         </Button>
-        <Button :variant="5" class="mr-2" @click="openDeleteInvoiceModal">
+        <Button :variant="5" class="mr-2" aria-label="Delete" @click="openDeleteInvoiceModal">
             Delete
         </Button>
-        <Button v-if="isNotDraft" :variant="2" @click="changeStatus">
+        <Button v-if="isNotDraft" :variant="2" aria-label="Change status" @click="changeStatus">
             {{ changeStatusBtnLabel }}
         </Button>
     </div>

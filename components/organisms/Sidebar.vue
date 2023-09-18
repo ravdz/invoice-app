@@ -1,6 +1,6 @@
 <template>
     <div
-        class="fixed top-18 md:top-20 xl:top-0 left-0 w-0 h-[calc(100vh-4.5rem)] md:h-[calc(100vh-5rem)] xl:h-screen"
+        class="fixed z-10 top-18 md:top-20 xl:top-0 left-0 w-0 h-[calc(100vh-4.5rem)] md:h-[calc(100vh-5rem)] xl:h-screen"
     >
         <Transition name="slide-from-left">
             <div

@@ -38,7 +38,7 @@
                 <CalendarIcon :filled="true" />
             </template>
             <template #dp-input="{ value }">
-                <button type="button" :class="datePickerTriggerClasses">
+                <button type="button" :class="datePickerTriggerClasses" aria-label="Select date">
                     <div class="flex justify-start items-center w-full relative">
                         <span v-if="!!value" class="dark:text-white-0">{{ value }}</span>
                         <span v-else class="text-blue-100">Select date</span>

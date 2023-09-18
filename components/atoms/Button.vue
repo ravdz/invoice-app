@@ -1,5 +1,5 @@
 <template>
-    <button :class="classes" type="button">
+    <button :class="classes" type="button" :aria-label="ariaLabel || ''">
         <div v-if="variant === 1" class="pr-4">
             <PlusIcon :filled="true" :font-controlled="false" class="w-8 h-8" />
         </div>
@@ -20,6 +20,7 @@ import PlusIcon from '@/assets/svg/plus-icon.svg'
 
 interface Props {
   variant: 1 | 2 | 3 | 4 | 5 | 6;
+  ariaLabel?: string
 }
 
 const props = defineProps<Props>()

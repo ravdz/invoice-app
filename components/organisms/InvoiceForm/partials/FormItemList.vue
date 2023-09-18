@@ -34,7 +34,7 @@
             />
         </div>
 
-        <Button :variant="6" class="mt-4.5" @click="addItem">
+        <Button :variant="6" class="mt-4.5" aria-label="Add New Item" @click="addItem">
             + Add New Item
         </Button>
 

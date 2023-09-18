@@ -1,6 +1,14 @@
 <template>
     <NuxtPage />
 </template>
+<script setup>
+useHead({
+    htmlAttrs: {
+        lang: 'en'
+
+    }
+})
+</script>
 <style>
 .slide-from-left-enter-active,
 .slide-from-left-leave-active {

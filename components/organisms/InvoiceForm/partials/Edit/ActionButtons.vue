@@ -2,10 +2,10 @@
     <div
         class="flex justify-end items-center px-6 py-5 bg-white-0 dark:bg-black-600 md:dark:bg-transparent"
     >
-        <Button :variant="3" class="mr-2" @click="triggerCloseSidebar">
+        <Button :variant="3" class="mr-2" aria-label="Cancel" @click="triggerCloseSidebar">
             Cancel
         </Button>
-        <Button :variant="2" @click="triggerSubmit">
+        <Button :variant="2" aria-label="Save Changes" @click="triggerSubmit">
             Save Changes
         </Button>
     </div>

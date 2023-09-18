@@ -1,7 +1,7 @@
 <template>
-    <div class="flex justify-center items-center min-h-screen flex-col">
+    <main role="main" class="flex justify-center items-center min-h-screen flex-col">
         <slot />
-    </div>
+    </main>
 </template>
 
 <script setup lang="ts">

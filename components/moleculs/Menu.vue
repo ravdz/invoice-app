@@ -1,18 +1,9 @@
 <template>
-    <div class="h-18 md:h-20 w-full xl:w-26 xl:h-screen z-20 relative">
+    <nav class="h-18 md:h-20 w-full xl:w-26 xl:h-screen z-20 relative" role="navigation">
         <div
             class="w-full xl:w-26 xl:h-screen xl:rounded-r-[20px] fixed flex justify-between items-stretch xl:flex-col bg-black-400 dark:bg-black-600 "
         >
-            <div
-                class="flex justify-center items-center w-18 md:w-20 xl:w-full h-18 md:h-20 xl:h-auto relative"
-            >
-                <LogoBg :filled="true" :font-controlled="false" class="w-full h-full" />
-                <Logo
-                    :filled="true"
-                    :font-controlled="false"
-                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                />
-            </div>
+            <img :src="LogoImg" alt="invoice app logo" class="h-18 md:h-20 xl:h-auto xl:w-26">
             <div
                 class="flex justify-center items-center xl:flex-col h-18 md:h-20 xl:h-auto xl:w-full pr-8 xl:pr-0 xl:pb-6"
             >
@@ -28,7 +19,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </nav>
 </template>
 
 <script lang="ts">
@@ -41,6 +32,5 @@ export default {
 <script setup lang="ts">
 import ThemeSwitcher from '@/components/atoms/ThemeSwitcher.vue'
 import UserProfilePreview from '@/components/atoms/UserProfilePreview.vue'
-import LogoBg from '@/assets/svg/logo-bg.svg'
-import Logo from '@/assets/svg/logo.svg'
+import LogoImg from '@/assets/img/logo.png'
 </script>

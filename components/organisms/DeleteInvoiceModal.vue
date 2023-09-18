@@ -10,10 +10,10 @@
                 Are you sure you want to delete invoice #{{ invoiceId }}? This action cannot be undone.
             </Text>
             <div class="flex justify-end items-center">
-                <Button :variant="3" class="mr-2" @click="triggerCloseModal">
+                <Button :variant="3" class="mr-2" aria-label="Cancel" @click="triggerCloseModal">
                     Cancel
                 </Button>
-                <Button :variant="5" @click="deleteInvoice">
+                <Button :variant="5" aria-label="Delete" @click="deleteInvoice">
                     Delete
                 </Button>
             </div>

@@ -2,14 +2,14 @@
     <div
         class="flex justify-between items-center px-6 md:px-14 py-5 md:pt-0 md:pb-8 bg-white-0 dark:bg-black-600 md:dark:bg-transparent"
     >
-        <Button :variant="3" class="mr-2" @click="triggerCloseSidebar">
+        <Button :variant="3" class="mr-2" aria-label="Discard" @click="triggerCloseSidebar">
             Discard
         </Button>
         <div class="flex items-center">
-            <Button :variant="4" class="mr-2" @click="triggerDraft">
+            <Button :variant="4" class="mr-2" aria-label="Save as Draft" @click="triggerDraft">
                 Save as Draft
             </Button>
-            <Button :variant="2" @click="triggerSubmit">
+            <Button :variant="2" aria-label="Save and Send" @click="triggerSubmit">
                 Save & Send
             </Button>
         </div>

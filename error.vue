@@ -6,7 +6,7 @@
         <Text tag="p" class="text-center text-base md:text-lg mb-4">
             {{ error.statusMessage }}
         </Text>
-        <Button :variant="2" @click="handleError">
+        <Button :variant="2" aria-label="Go back to dashboard" @click="handleError">
             Go back to dashboard
         </Button>
     </NuxtLayout>

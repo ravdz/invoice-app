@@ -1,14 +1,15 @@
 <template>
     <div class="xl:flex xl:justify-stretch xl:items-stretch min-h-screen">
         <Menu />
-        <div
+        <main
+            role="main"
             class="z-10 xl:flex-grow mx-auto xl:max-w-xl-container"
         >
             <Sidebar :is-open="isSidebarOpen" @close="closeSidebar">
                 <InvoiceForm @close="closeSidebar" />
             </Sidebar>
             <slot />
-        </div>
+        </main>
     </div>
 </template>
 
