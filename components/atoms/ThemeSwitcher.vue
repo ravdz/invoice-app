@@ -2,6 +2,7 @@
     <div>
         <button
             v-if="isThemeLight"
+            aria-label="Dark theme"
             class="flex justify-center items-center"
             type="button"
             @click="colorMode.preference = 'dark'"
@@ -11,6 +12,7 @@
 
         <button
             v-if="isThemeDark"
+            aria-label="Light theme"
             class="flex justify-center items-center"
             type="button"
             @click="colorMode.preference = 'light'"

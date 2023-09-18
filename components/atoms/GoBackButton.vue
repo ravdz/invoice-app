@@ -1,5 +1,6 @@
 <template>
     <button
+        aria-label="Go back"
         class="flex justify-center items-center"
         type="button"
         @click="triggerCloseSidebar"

@@ -16,6 +16,7 @@
         </div>
         <button
             ref="dropdownTriggerRef"
+            :aria-label="label"
             type="button"
             :class="[dropdownTriggerClasses, triggerClasses]"
             @click="isOpen ? closeDropdown() : openDropdown()"
@@ -33,6 +34,7 @@
                     <button
                         v-for="option in options"
                         :key="option.name"
+                        :aria-label="label"
                         class="w-full py-4.5 px-6 border-b last:border-none border-blue-100 dark:border-black-600 dark:text-blue-100 text-left text-sm leading-3 -tracking-sm font-bold hover:text-blue-500 dark:hover:text-blue-400 transition"
                         type="button"
                         @click="selectOption(option)"

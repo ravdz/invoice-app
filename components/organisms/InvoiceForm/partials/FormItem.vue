@@ -39,6 +39,7 @@
         </div>
 
         <button
+            aria-label="Delete"
             type="button"
             class="basis-1/6 md:basis-1/12 pl-4"
             @click="removeItem"

@@ -1,5 +1,6 @@
 <template>
     <button
+        :aria-label="option.label"
         class="w-full dark:text-white-0 text-left text-sm leading-3 -tracking-sm font-bold flex justify-start items-center mb-4 last:mb-0 group"
         type="button"
         @click="handleChangeFilter"

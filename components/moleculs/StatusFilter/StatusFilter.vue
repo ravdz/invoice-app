@@ -1,6 +1,7 @@
 <template>
     <div v-click-outside="closeDropdown" class="relative mr-10">
         <button
+            aria-label="Filter by status"
             type="button"
             class="text-black-800 dark:text-white-0 text-sm leading-3 -tracking-sm font-bold flex justify-start items-center z-0 relative"
             @click="isOpen ? closeDropdown() : openDropdown()"
