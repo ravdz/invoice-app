@@ -17,14 +17,6 @@ This is an invoice app that allow user to:
 - Pinia
 - Vuelidate
 
-## Stack
-
-- Nuxt v3.6
-- Typescript
-- Tailwind
-- Pinia
-- Vuelidate
-
 ## Setup
 
 Make sure to install the dependencies:
