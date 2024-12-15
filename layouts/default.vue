@@ -1,29 +1,26 @@
 <template>
-    <div class="xl:flex xl:justify-stretch xl:items-stretch min-h-screen">
-        <Menu />
-        <main
-            role="main"
-            class="z-10 xl:flex-grow mx-auto xl:max-w-xl-container"
-        >
-            <Sidebar :is-open="isSidebarOpen" @close="closeSidebar">
-                <InvoiceForm @close="closeSidebar" />
-            </Sidebar>
-            <slot />
-        </main>
-    </div>
+	<div class="min-h-screen xl:flex xl:items-stretch xl:justify-stretch">
+		<Menu />
+		<main role="main" class="z-10 mx-auto xl:max-w-xl-container xl:flex-grow">
+			<Sidebar :is-open="isSidebarOpen" @close="closeSidebar">
+				<InvoiceForm @close="closeSidebar" />
+			</Sidebar>
+			<slot />
+		</main>
+	</div>
 </template>
 
 <script setup lang="ts">
-import { sidebarsStore } from '@/store/sidebars'
-import Menu from '@/components/moleculs/Menu.vue'
-import Sidebar from '@/components/organisms/Sidebar.vue'
-import InvoiceForm from '@/components/organisms/InvoiceForm/InvoiceForm.vue'
+import Menu from "@/components/moleculs/Menu.vue";
+import InvoiceForm from "@/components/organisms/InvoiceForm/InvoiceForm.vue";
+import Sidebar from "@/components/organisms/Sidebar.vue";
+import { sidebarsStore } from "@/store/sidebars";
 
-const store = sidebarsStore()
+const store = sidebarsStore();
 
-const isSidebarOpen = computed(() => store.invoiceSidebar.isOpen)
+const isSidebarOpen = computed(() => store.invoiceSidebar.isOpen);
 
 const closeSidebar = () => {
-    store.changeInvoiceSidebarVisibility(false)
-}
+	store.changeInvoiceSidebarVisibility(false);
+};
 </script>
