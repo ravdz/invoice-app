@@ -1,36 +1,34 @@
 <template>
-    <nav class="h-18 md:h-20 w-full xl:w-26 xl:h-screen z-20 relative" role="navigation">
-        <div
-            class="w-full xl:w-26 xl:h-screen xl:rounded-r-[20px] fixed flex justify-between items-stretch xl:flex-col bg-black-400 dark:bg-black-600 "
-        >
-            <img :src="LogoImg" alt="invoice app logo" class="h-18 md:h-20 xl:h-auto xl:w-26">
-            <div
-                class="flex justify-center items-center xl:flex-col h-18 md:h-20 xl:h-auto xl:w-full pr-8 xl:pr-0 xl:pb-6"
-            >
-                <div
-                    class="pr-7 xl:pr-0 xl:pb-6 border-r xl:border-r-0 xl:border-b border-[#494E6E] h-full flex justify-center items-center xl:w-full"
-                >
-                    <ThemeSwitcher />
-                </div>
-                <div
-                    class="pl-7 xl:pl-0 xl:pt-6 h-full flex justify-center items-center xl:w-full"
-                >
-                    <UserProfilePreview />
-                </div>
-            </div>
-        </div>
-    </nav>
+	<nav class="relative z-20 h-18 w-full md:h-20 xl:h-screen xl:w-26" role="navigation">
+		<div
+			class="fixed flex w-full items-stretch justify-between bg-black-400 dark:bg-black-600 xl:h-screen xl:w-26 xl:flex-col xl:rounded-r-[20px]"
+		>
+			<img :src="LogoImg" alt="invoice app logo" class="h-18 md:h-20 xl:h-auto xl:w-26" />
+			<div
+				class="flex h-18 items-center justify-center pr-8 md:h-20 xl:h-auto xl:w-full xl:flex-col xl:pb-6 xl:pr-0"
+			>
+				<div
+					class="flex h-full items-center justify-center border-r border-[#494E6E] pr-7 xl:w-full xl:border-b xl:border-r-0 xl:pb-6 xl:pr-0"
+				>
+					<ThemeSwitcher />
+				</div>
+				<div class="flex h-full items-center justify-center pl-7 xl:w-full xl:pl-0 xl:pt-6">
+					<UserProfilePreview />
+				</div>
+			</div>
+		</div>
+	</nav>
 </template>
 
 <script lang="ts">
 export default {
-    name: 'VueMenu',
-    inheritAttrs: false
-}
+	name: "VueMenu",
+	inheritAttrs: false,
+};
 </script>
 
 <script setup lang="ts">
-import ThemeSwitcher from '@/components/atoms/ThemeSwitcher.vue'
-import UserProfilePreview from '@/components/atoms/UserProfilePreview.vue'
-import LogoImg from '@/assets/img/logo.png'
+import LogoImg from "@/assets/img/logo.png";
+import ThemeSwitcher from "@/components/atoms/ThemeSwitcher.vue";
+import UserProfilePreview from "@/components/atoms/UserProfilePreview.vue";
 </script>
