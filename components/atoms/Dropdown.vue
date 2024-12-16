@@ -54,7 +54,7 @@ export default {
 <script setup lang="ts">
 import { twMerge } from "tailwind-merge";
 
-import { Option } from "@/interfaces/dropdown";
+import type { Option } from "@/interfaces/dropdown";
 
 interface Props {
 	label: string;

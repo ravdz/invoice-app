@@ -25,7 +25,7 @@ export const invoicesStore = defineStore("invoices", {
 			this.invoices.push(invoice);
 		},
 		updateInvoice(invoiceId: string, invoiceForm: InvoiceDataOptionals) {
-			const invoices = this.invoices.map((invoice) => {
+			this.invoices = this.invoices.map((invoice) => {
 				if (invoice.id === invoiceId) {
 					return {
 						...invoice,
@@ -34,11 +34,9 @@ export const invoicesStore = defineStore("invoices", {
 				}
 				return invoice;
 			});
-			this.invoices = invoices;
 		},
 		deleteInvoice(invoiceId: string) {
-			const invoices = this.invoices.filter((invoice) => invoice.id !== invoiceId);
-			this.invoices = invoices;
+			this.invoices = this.invoices.filter((invoice) => invoice.id !== invoiceId);
 		},
 		changeFilters(status: InvoiceStatus) {
 			if (this.filterBy.includes(status)) {
@@ -52,15 +50,15 @@ export const invoicesStore = defineStore("invoices", {
 		filteredInvoices: (state) => {
 			const { invoices, filterBy } = state;
 			if (!filterBy.length) return invoices;
-			const results = invoices.filter((invoice) => {
+			return invoices.filter((invoice) => {
 				const invoiceMatch = filterBy.includes(invoice.status);
 				if (invoiceMatch) return invoice;
 				return false;
 			});
-			return results;
 		},
 	},
 	persist: {
-		storage: persistedState.localStorage,
+		key: "invoices",
+		storage: localStorage,
 	},
 });

@@ -7,7 +7,7 @@
 			label="Item Name"
 			name="name"
 			class="mb-6 basis-full md:mb-0 md:basis-4/12 [&>.label>.error-label]:hidden md:[&>.label]:hidden"
-			:error-message="errorMessage.name.length ? errorMessage.name[0].$message : null"
+			:error="errorMessage.name.length ? errorMessage.name[0].$message : null"
 		/>
 		<Input
 			v-model="quantity"

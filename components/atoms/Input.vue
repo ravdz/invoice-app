@@ -43,6 +43,7 @@ export default {
 </script>
 
 <script setup lang="ts">
+import type { ErrorObject } from "@vuelidate/core";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
@@ -51,21 +52,14 @@ interface Props {
 	name: string;
 	placeholder?: string;
 	modelValue: string | number;
-	errorMessage?: string | null;
+	error?: string | ErrorObject[] | null;
 	min?: string;
 	step?: string;
 	max?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-	label: "",
 	type: "text",
-	placeholder: "",
-	modelValue: "",
-	errorMessage: "",
-	min: "",
-	step: "",
-	max: "",
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -81,11 +75,12 @@ const inputValue = computed({
 	},
 });
 
-const hasError = computed(() => {
-	if (props.errorMessage) {
-		return true;
-	}
-	return false;
+const hasError = computed(() => !!props.error);
+
+const errorMessage = computed(() => {
+	if (typeof props.error === "string") return props.error;
+	else if (props.error?.length) return props.error[0].$message;
+	else return "";
 });
 
 const inputWrapperClasses = computed(() => {

@@ -23,7 +23,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { Option } from "@/interfaces/dropdown";
+import type { Option } from "@/interfaces/dropdown";
 import { invoicesStore } from "@/store/invoices";
 
 interface Props {
