@@ -1,7 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 export default defineNuxtConfig({
 	ssr: false,
-
 	vite: {
 		vue: {
 			script: {
@@ -12,6 +11,13 @@ export default defineNuxtConfig({
 					readFile(file) {
 						return readFileSync(file, "utf-8");
 					},
+				},
+			},
+		},
+		css: {
+			preprocessorOptions: {
+				scss: {
+					api: "modern",
 				},
 			},
 		},
@@ -36,7 +42,8 @@ export default defineNuxtConfig({
 		"@nuxtjs/color-mode",
 		"nuxt-svgo",
 		"@pinia/nuxt",
-		"@pinia-plugin-persistedstate/nuxt",
+		"pinia-plugin-persistedstate/nuxt",
+		"@nuxt/test-utils/module",
 	],
 
 	css: ["~/assets/style/global.scss"],

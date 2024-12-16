@@ -5,7 +5,7 @@ export type FormItem = {
 	price: number;
 };
 
-export type IUpdateItem = {
+export type UpdateItemType = {
 	itemId: string;
 	fieldName: string;
 	fieldValue: string | number;

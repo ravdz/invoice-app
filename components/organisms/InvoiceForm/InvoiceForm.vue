@@ -18,7 +18,7 @@
 						label="Street Address"
 						name="fromStreet"
 						class="mt-6"
-						:error-message="v.fromStreet.$errors.length ? v.fromStreet.$errors[0].$message : null"
+						:error="v.fromStreet.$errors"
 					/>
 					<div
 						class="mt-6 flex flex-wrap items-center justify-center md:grid md:grid-cols-3 md:gap-6"
@@ -28,23 +28,21 @@
 							label="City"
 							name="fromCity"
 							class="basis-1/2 pr-3 md:basis-auto md:pr-0"
-							:error-message="v.fromCity.$errors.length ? v.fromCity.$errors[0].$message : null"
+							:error="v.fromCity.$errors"
 						/>
 						<Input
 							v-model="invoiceForm.fromZip"
 							label="Post Code"
 							name="fromZip"
 							class="basis-1/2 pl-3 md:basis-auto md:pl-0"
-							:error-message="v.fromZip.$errors.length ? v.fromZip.$errors[0].$message : null"
+							:error="v.fromZip.$errors"
 						/>
 						<Input
 							v-model="invoiceForm.fromCountry"
 							label="Country"
 							name="fromCountry"
 							class="mt-6 basis-full md:mt-0 md:basis-auto"
-							:error-message="
-								v.fromCountry.$errors.length ? v.fromCountry.$errors[0].$message : null
-							"
+							:error="v.fromCountry.$errors"
 						/>
 					</div>
 				</div>
@@ -58,25 +56,21 @@
 						label="Client's Name"
 						name="toClientName"
 						class="mt-6"
-						:error-message="
-							v.toClientName.$errors.length ? v.toClientName.$errors[0].$message : null
-						"
+						:error="v.toClientName.$errors"
 					/>
 					<Input
 						v-model="invoiceForm.toClientEmail"
 						label="Client's Email"
 						name="toClientEmail"
 						class="mt-6"
-						:error-message="
-							v.toClientEmail.$errors.length ? v.toClientEmail.$errors[0].$message : null
-						"
+						:error="v.toClientEmail.$errors"
 					/>
 					<Input
 						v-model="invoiceForm.toStreet"
 						label="Street Address"
 						name="toStreet"
 						class="mt-6"
-						:error-message="v.toStreet.$errors.length ? v.toStreet.$errors[0].$message : null"
+						:error="v.toStreet.$errors"
 					/>
 					<div
 						class="mt-6 flex flex-wrap items-center justify-center md:grid md:grid-cols-3 md:gap-6"
@@ -86,21 +80,21 @@
 							label="City"
 							name="toCity"
 							class="basis-1/2 pr-3 md:basis-auto md:pr-0"
-							:error-message="v.toCity.$errors.length ? v.toCity.$errors[0].$message : null"
+							:error="v.toCity.$errors"
 						/>
 						<Input
 							v-model="invoiceForm.toZip"
 							label="Post Code"
 							name="toZip"
 							class="basis-1/2 pl-3 md:basis-auto md:pl-0"
-							:error-message="v.toZip.$errors.length ? v.toZip.$errors[0].$message : null"
+							:error="v.toZip.$errors"
 						/>
 						<Input
 							v-model="invoiceForm.toCountry"
 							label="Country"
 							name="toCountry"
 							class="mt-6 basis-full md:mt-0 md:basis-auto"
-							:error-message="v.toCountry.$errors.length ? v.toCountry.$errors[0].$message : null"
+							:error="v.toCountry.$errors"
 						/>
 					</div>
 					<div class="mt-12 flex flex-wrap">
@@ -109,9 +103,7 @@
 							label="Invoice Date"
 							name="invoiceDate"
 							class="basis-full md:basis-1/2 md:pr-3"
-							:error-message="
-								v.invoiceDate.$errors.length ? v.invoiceDate.$errors[0].$message : null
-							"
+							:error="v.invoiceDate.$errors"
 						/>
 						<Dropdown
 							v-model="invoiceForm.paymentTerms"
@@ -119,9 +111,7 @@
 							name="paymentTerms"
 							:options="paymentTermsOptions"
 							class="mt-6 basis-full md:mt-0 md:basis-1/2 md:pl-3"
-							:error-message="
-								v.paymentTerms.$errors.length ? v.paymentTerms.$errors[0].$message : null
-							"
+							:error="v.paymentTerms.$errors"
 						/>
 					</div>
 					<Input
@@ -129,7 +119,7 @@
 						label="Project Description"
 						name="description"
 						class="mt-6"
-						:error-message="v.description.$errors.length ? v.description.$errors[0].$message : null"
+						:error="v.description.$errors"
 					/>
 				</div>
 
@@ -187,8 +177,13 @@ import AddHeader from "@/components/organisms/InvoiceForm/partials/Add/Header.vu
 import EditActionButtons from "@/components/organisms/InvoiceForm/partials/Edit/ActionButtons.vue";
 import EditHeader from "@/components/organisms/InvoiceForm/partials/Edit/Header.vue";
 import FormItemList from "@/components/organisms/InvoiceForm/partials/FormItemList.vue";
-import { Option } from "@/interfaces/dropdown";
-import type { FormItem, Invoice, InvoiceStatus, IUpdateItem } from "@/interfaces/invoice-form";
+import type { Option } from "@/interfaces/dropdown";
+import {
+	type FormItem,
+	type Invoice,
+	InvoiceStatus,
+	type UpdateItemType,
+} from "@/interfaces/invoice-form";
 import { invoicesStore } from "@/store/invoices";
 import { sidebarsStore } from "@/store/sidebars";
 import {
@@ -383,18 +378,16 @@ const addItem = (newItem: FormItem) => {
 };
 
 const removeItem = (itemId: string) => {
-	const newItemList = invoiceForm.value.items.filter((item: FormItem) => item.id !== itemId);
-	invoiceForm.value.items = newItemList;
+	invoiceForm.value.items = invoiceForm.value.items.filter((item: FormItem) => item.id !== itemId);
 };
 
-const updateItem = (data: IUpdateItem) => {
+const updateItem = (data: UpdateItemType) => {
 	const { itemId, fieldName, fieldValue } = data;
-	const updatedItems = invoiceForm.value.items.map((item: FormItem) => {
+	invoiceForm.value.items = invoiceForm.value.items.map((item: FormItem) => {
 		if (item.id === itemId) {
 			return { ...item, [fieldName]: fieldValue };
 		}
 		return item;
 	});
-	invoiceForm.value.items = updatedItems;
 };
 </script>
