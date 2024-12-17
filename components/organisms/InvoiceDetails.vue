@@ -85,20 +85,19 @@ export default {
 </script>
 
 <script setup lang="ts">
-// import * as dayjs from 'dayjs'
 import Heading from "@/components/atoms/Heading.vue";
 import Text from "@/components/atoms/Text.vue";
 import DetailItemList from "@/components/organisms/DetailItemList/DetailItemList.vue";
-import type { Invoice, InvoiceStatus } from "@/interfaces/invoice-form";
+import type { Invoice, InvoiceStatus } from "@/types/invoice-form";
 
 interface InvoiceWithId extends Invoice {
 	id: string;
 	status: InvoiceStatus;
 }
 
-interface Props {
+type Props = {
 	invoiceData: InvoiceWithId;
-}
+};
 
 const props = defineProps<Props>();
 

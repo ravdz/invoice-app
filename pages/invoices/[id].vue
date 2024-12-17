@@ -24,8 +24,8 @@ import DetailsActionBar from "@/components/moleculs/DetailsActionBar.vue";
 import DetailsPageBar from "@/components/moleculs/DetailsPageBar.vue";
 import DeleteInvoiceModal from "@/components/organisms/DeleteInvoiceModal.vue";
 import InvoiceDetails from "@/components/organisms/InvoiceDetails.vue";
-import type { Invoice, InvoiceStatus } from "@/interfaces/invoice-form";
 import { invoicesStore } from "@/store/invoices";
+import type { Invoice, InvoiceStatus } from "@/types/invoice-form";
 
 interface InvoiceWithId extends Invoice {
 	id: string;

@@ -46,7 +46,7 @@ export default {
 import type { ErrorObject } from "@vuelidate/core";
 import { twMerge } from "tailwind-merge";
 
-interface Props {
+type Props = {
 	label?: string;
 	type?: string;
 	name: string;
@@ -56,10 +56,16 @@ interface Props {
 	min?: string;
 	step?: string;
 	max?: string;
-}
+};
 
 const props = withDefaults(defineProps<Props>(), {
+	label: "",
 	type: "text",
+	placeholder: "",
+	error: null,
+	min: "",
+	step: "",
+	max: "",
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -75,7 +81,7 @@ const inputValue = computed({
 	},
 });
 
-const hasError = computed(() => !!props.error);
+const hasError = computed(() => !!props.error?.length);
 
 const errorMessage = computed(() => {
 	if (typeof props.error === "string") return props.error;

@@ -16,9 +16,9 @@ export default {
 </script>
 
 <script setup lang="ts">
-interface Props {
+type Props = {
 	statusKey: number;
-}
+};
 
 const props = defineProps<Props>();
 

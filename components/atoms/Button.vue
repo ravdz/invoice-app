@@ -19,10 +19,10 @@ import { twMerge } from "tailwind-merge";
 
 import PlusIcon from "@/assets/svg/plus-icon.svg";
 
-interface Props {
+type Props = {
 	variant: 1 | 2 | 3 | 4 | 5 | 6;
 	ariaLabel?: string;
-}
+};
 
 const props = defineProps<Props>();
 

@@ -14,7 +14,7 @@
 						Bill From
 					</Heading>
 					<Input
-						v-model="invoiceForm.fromStreet"
+						v-model="v.fromStreet.$model"
 						label="Street Address"
 						name="fromStreet"
 						class="mt-6"
@@ -24,21 +24,21 @@
 						class="mt-6 flex flex-wrap items-center justify-center md:grid md:grid-cols-3 md:gap-6"
 					>
 						<Input
-							v-model="invoiceForm.fromCity"
+							v-model="v.fromCity.$model"
 							label="City"
 							name="fromCity"
 							class="basis-1/2 pr-3 md:basis-auto md:pr-0"
 							:error="v.fromCity.$errors"
 						/>
 						<Input
-							v-model="invoiceForm.fromZip"
+							v-model="v.fromZip.$model"
 							label="Post Code"
 							name="fromZip"
 							class="basis-1/2 pl-3 md:basis-auto md:pl-0"
 							:error="v.fromZip.$errors"
 						/>
 						<Input
-							v-model="invoiceForm.fromCountry"
+							v-model="v.fromCountry.$model"
 							label="Country"
 							name="fromCountry"
 							class="mt-6 basis-full md:mt-0 md:basis-auto"
@@ -52,21 +52,21 @@
 						Bill To
 					</Heading>
 					<Input
-						v-model="invoiceForm.toClientName"
+						v-model="v.toClientName.$model"
 						label="Client's Name"
 						name="toClientName"
 						class="mt-6"
 						:error="v.toClientName.$errors"
 					/>
 					<Input
-						v-model="invoiceForm.toClientEmail"
+						v-model="v.toClientEmail.$model"
 						label="Client's Email"
 						name="toClientEmail"
 						class="mt-6"
 						:error="v.toClientEmail.$errors"
 					/>
 					<Input
-						v-model="invoiceForm.toStreet"
+						v-model="v.toStreet.$model"
 						label="Street Address"
 						name="toStreet"
 						class="mt-6"
@@ -76,21 +76,21 @@
 						class="mt-6 flex flex-wrap items-center justify-center md:grid md:grid-cols-3 md:gap-6"
 					>
 						<Input
-							v-model="invoiceForm.toCity"
+							v-model="v.toCity.$model"
 							label="City"
 							name="toCity"
 							class="basis-1/2 pr-3 md:basis-auto md:pr-0"
 							:error="v.toCity.$errors"
 						/>
 						<Input
-							v-model="invoiceForm.toZip"
+							v-model="v.toZip.$model"
 							label="Post Code"
 							name="toZip"
 							class="basis-1/2 pl-3 md:basis-auto md:pl-0"
 							:error="v.toZip.$errors"
 						/>
 						<Input
-							v-model="invoiceForm.toCountry"
+							v-model="v.toCountry.$model"
 							label="Country"
 							name="toCountry"
 							class="mt-6 basis-full md:mt-0 md:basis-auto"
@@ -99,14 +99,14 @@
 					</div>
 					<div class="mt-12 flex flex-wrap">
 						<DatePicker
-							v-model="invoiceForm.invoiceDate"
+							v-model="v.invoiceDate.$model"
 							label="Invoice Date"
 							name="invoiceDate"
 							class="basis-full md:basis-1/2 md:pr-3"
 							:error="v.invoiceDate.$errors"
 						/>
 						<Dropdown
-							v-model="invoiceForm.paymentTerms"
+							v-model="v.paymentTerms.$model"
 							label="Payment Terms"
 							name="paymentTerms"
 							:options="paymentTermsOptions"
@@ -115,7 +115,7 @@
 						/>
 					</div>
 					<Input
-						v-model="invoiceForm.description"
+						v-model="v.description.$model"
 						label="Project Description"
 						name="description"
 						class="mt-6"
@@ -124,13 +124,7 @@
 				</div>
 
 				<div class="mt-12">
-					<FormItemList
-						:items="invoiceForm.items"
-						:error-messages="v.items"
-						@add="addItem"
-						@remove="removeItem"
-						@update="updateItem"
-					/>
+					<FormItemList v-model="v.items.$model" :errors="v.items.$errors" />
 				</div>
 			</div>
 
@@ -164,9 +158,6 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { useVuelidate } from "@vuelidate/core";
-import { helpers } from "@vuelidate/validators";
-
 import DatePicker from "@/components/atoms/DatePicker.vue";
 import Dropdown from "@/components/atoms/Dropdown.vue";
 import GoBackButton from "@/components/atoms/GoBackButton.vue";
@@ -177,24 +168,11 @@ import AddHeader from "@/components/organisms/InvoiceForm/partials/Add/Header.vu
 import EditActionButtons from "@/components/organisms/InvoiceForm/partials/Edit/ActionButtons.vue";
 import EditHeader from "@/components/organisms/InvoiceForm/partials/Edit/Header.vue";
 import FormItemList from "@/components/organisms/InvoiceForm/partials/FormItemList.vue";
-import type { Option } from "@/interfaces/dropdown";
-import {
-	type FormItem,
-	type Invoice,
-	InvoiceStatus,
-	type UpdateItemType,
-} from "@/interfaces/invoice-form";
+import useInvoiceForm from "@/composables/useInvoiceForm";
 import { invoicesStore } from "@/store/invoices";
 import { sidebarsStore } from "@/store/sidebars";
-import {
-	decimal,
-	email,
-	integer,
-	maxLength,
-	minLength,
-	minNumber,
-	required,
-} from "@/utils/validation/rules";
+import type { Option } from "@/types/dropdown";
+import { type Invoice, InvoiceStatus } from "@/types/invoice-form";
 
 const emit = defineEmits(["close"]);
 
@@ -213,6 +191,7 @@ const paymentTermsOptions = ref<Option[]>([
 ]);
 
 const invoiceId = ref<string>(invoiceData?.id || "");
+
 const invoiceForm = ref<Invoice>({
 	fromStreet: invoiceData?.fromStreet || "",
 	fromCity: invoiceData?.fromCity || "",
@@ -232,104 +211,18 @@ const invoiceForm = ref<Invoice>({
 
 const isEditMode = computed(() => !!invoiceId.value);
 
-const invoiceStatus = computed(() => {
+const invoiceStatus = computed<InvoiceStatus>(() => {
 	if (
 		typeof invoiceData?.status === "number" &&
 		Object.values(InvoiceStatus).includes(invoiceData.status)
 	) {
-		return invoiceData.status as InvoiceStatus;
+		return invoiceData.status;
 	} else {
 		return 2;
 	}
 });
 
-const invoiceFormSchema = computed(() => ({
-	fromStreet: {
-		required: required(),
-		minLength: minLength(2),
-		maxLength: maxLength(35),
-	},
-	fromCity: {
-		required: required(),
-		minLength: minLength(2),
-		maxLength: maxLength(35),
-	},
-	fromZip: {
-		required: required(),
-		minLength: minLength(2),
-		maxLength: maxLength(10),
-	},
-	fromCountry: {
-		required: required(),
-		minLength: minLength(2),
-		maxLength: maxLength(35),
-	},
-	toClientName: {
-		required: required(),
-		minLength: minLength(2),
-		maxLength: maxLength(50),
-	},
-	toClientEmail: {
-		required: required(),
-		email,
-		minLength: minLength(2),
-		maxLength: maxLength(50),
-	},
-	toStreet: {
-		required: required(),
-		minLength: minLength(2),
-		maxLength: maxLength(50),
-	},
-	toCity: {
-		required: required(),
-		minLength: minLength(2),
-		maxLength: maxLength(35),
-	},
-	toZip: {
-		required: required(),
-		minLength: minLength(2),
-		maxLength: maxLength(10),
-	},
-	toCountry: {
-		required: required(),
-		minLength: minLength(2),
-		maxLength: maxLength(35),
-	},
-	invoiceDate: {
-		required: required(),
-	},
-	paymentTerms: {
-		required: required(),
-		integer,
-	},
-	description: {
-		required: required(),
-		minLength: minLength(2),
-		maxLength: maxLength(150),
-	},
-	items: {
-		required: required("An item must be added"),
-		$each: helpers.forEach({
-			name: {
-				required: required("All fields must be added"),
-				minLength: minLength(2),
-				maxLength: maxLength(35),
-			},
-			quantity: {
-				integer,
-				required: required("All fields must be added"),
-				minValue: minNumber(1),
-			},
-			price: {
-				decimal,
-				required: required("All fields must be added"),
-				minValue: minNumber(0.01),
-			},
-		}),
-	},
-}));
-
-const v = useVuelidate(invoiceFormSchema, invoiceForm.value);
+const v = useInvoiceForm(invoiceForm.value);
 
 const triggerCloseSidebar = () => {
 	emit("close");
@@ -371,23 +264,5 @@ const triggerSaveAsDraft = () => {
 	} catch (error: any) {
 		console.error(error);
 	}
-};
-
-const addItem = (newItem: FormItem) => {
-	invoiceForm.value.items = [...invoiceForm.value.items, newItem];
-};
-
-const removeItem = (itemId: string) => {
-	invoiceForm.value.items = invoiceForm.value.items.filter((item: FormItem) => item.id !== itemId);
-};
-
-const updateItem = (data: UpdateItemType) => {
-	const { itemId, fieldName, fieldValue } = data;
-	invoiceForm.value.items = invoiceForm.value.items.map((item: FormItem) => {
-		if (item.id === itemId) {
-			return { ...item, [fieldName]: fieldValue };
-		}
-		return item;
-	});
 };
 </script>

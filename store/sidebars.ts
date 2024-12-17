@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import type { Invoice, InvoiceStatus } from "@/interfaces/invoice-form";
+import type { Invoice, InvoiceStatus } from "@/types/invoice-form";
 
 interface InvoiceData extends Invoice {
 	id: string;
@@ -12,13 +12,17 @@ interface InvoiceSidebar {
 	invoiceData: InvoiceData | null;
 }
 
+type State = {
+	invoiceSidebar: InvoiceSidebar;
+};
+
 export const sidebarsStore = defineStore("sidebars", {
-	state: () => {
+	state: (): State => {
 		return {
 			invoiceSidebar: {
 				isOpen: false,
 				invoiceData: null,
-			} as InvoiceSidebar,
+			},
 		};
 	},
 	actions: {

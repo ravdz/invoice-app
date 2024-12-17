@@ -1,13 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { generateUniqueID, roundNumber } from "@/utils/helpers";
-
-describe("generateUniqueIDFunc", () => {
-	test("should return string with 2 big letters at the start and then 4 numbers", () => {
-		const result = generateUniqueID();
-		expect(result).toMatch(/^[A-Z]{2}\d{4}$/);
-	});
-});
+import { roundNumber } from "@/utils/helpers";
 
 describe("roundNumberFunc", () => {
 	test("should return a rounded number with only 2 digits", () => {

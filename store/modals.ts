@@ -1,9 +1,13 @@
 import { defineStore } from "pinia";
 
+type State = {
+	deleteInvoiceModalOpen: boolean;
+};
+
 export const modalsStore = defineStore("modals", {
-	state: () => {
+	state: (): State => {
 		return {
-			deleteInvoiceModalOpen: false as boolean,
+			deleteInvoiceModalOpen: false,
 		};
 	},
 	actions: {

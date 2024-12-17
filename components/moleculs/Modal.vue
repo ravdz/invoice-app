@@ -22,9 +22,9 @@ export default {
 </script>
 
 <script setup lang="ts">
-interface Props {
+type Props = {
 	isOpen: boolean;
-}
+};
 
 const props = defineProps<Props>();
 

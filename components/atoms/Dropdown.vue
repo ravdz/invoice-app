@@ -52,24 +52,25 @@ export default {
 </script>
 
 <script setup lang="ts">
+import type { ErrorObject } from "@vuelidate/core";
 import { twMerge } from "tailwind-merge";
 
-import type { Option } from "@/interfaces/dropdown";
+import type { Option } from "@/types/dropdown";
 
-interface Props {
+type Props = {
 	label: string;
 	name: string;
 	modelValue: number | null;
-	errorMessage?: string | null;
+	error?: string | ErrorObject[] | null;
 	options: Option[];
 	triggerClasses?: string;
 	dropdownClasses?: string;
-}
+};
 
 const props = withDefaults(defineProps<Props>(), {
+	error: null,
 	triggerClasses: "",
 	dropdownClasses: "",
-	errorMessage: "",
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -87,11 +88,12 @@ const selectionLabel = computed(() => {
 	return "No label";
 });
 
-const hasError = computed(() => {
-	if (props.errorMessage) {
-		return true;
-	}
-	return false;
+const hasError = computed(() => !!props.error?.length);
+
+const errorMessage = computed(() => {
+	if (typeof props.error === "string") return props.error;
+	else if (props.error?.length) return props.error[0].$message;
+	else return "";
 });
 
 const dropdownWrapperClasses = computed(() => {

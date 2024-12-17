@@ -23,12 +23,12 @@ export default {
 </script>
 
 <script setup lang="ts">
-import type { Option } from "@/interfaces/dropdown";
 import { invoicesStore } from "@/store/invoices";
+import type { Option } from "@/types/dropdown";
 
-interface Props {
+type Props = {
 	option: Option;
-}
+};
 
 const props = defineProps<Props>();
 
