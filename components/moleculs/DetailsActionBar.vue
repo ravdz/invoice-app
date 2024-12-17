@@ -21,19 +21,19 @@ export default {
 
 <script setup lang="ts">
 import Button from "@/components/atoms/Button.vue";
-import type { Invoice, InvoiceStatus } from "@/interfaces/invoice-form";
 import { invoicesStore } from "@/store/invoices";
 import { modalsStore } from "@/store/modals";
 import { sidebarsStore } from "@/store/sidebars";
+import type { Invoice, InvoiceStatus } from "@/types/invoice-form";
 
 interface InvoiceWithId extends Invoice {
 	id: string;
 	status: InvoiceStatus;
 }
 
-interface Props {
+type Props = {
 	invoiceData: InvoiceWithId;
-}
+};
 
 const props = defineProps<Props>();
 

@@ -14,9 +14,9 @@ export default {
 <script setup lang="ts">
 import { twMerge } from "tailwind-merge";
 
-interface Props {
+type Props = {
 	tag: "span" | "p";
-}
+};
 
 defineProps<Props>();
 

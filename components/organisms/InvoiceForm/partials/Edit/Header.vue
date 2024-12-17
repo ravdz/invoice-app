@@ -15,9 +15,9 @@ export default {
 <script setup lang="ts">
 import Heading from "@/components/atoms/Heading.vue";
 
-interface Props {
+type Props = {
 	invoiceId: string;
-}
+};
 
 defineProps<Props>();
 </script>

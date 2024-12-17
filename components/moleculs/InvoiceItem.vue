@@ -38,16 +38,16 @@ export default {
 import ArrowRightIcon from "@/assets/svg/arrow-right-icon.svg";
 import Heading from "@/components/atoms/Heading.vue";
 import StatusBadge from "@/components/atoms/StatusBadge.vue";
-import type { FormItem, Invoice, InvoiceStatus } from "@/interfaces/invoice-form";
+import type { FormItem, Invoice, InvoiceStatus } from "@/types/invoice-form";
 
 interface InvoiceWithId extends Invoice {
 	id: string;
 	status: InvoiceStatus;
 }
 
-interface Props {
+type Props = {
 	invoiceData: InvoiceWithId;
-}
+};
 
 const props = defineProps<Props>();
 

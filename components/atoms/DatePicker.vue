@@ -59,9 +59,9 @@ export default {
 </script>
 
 <script setup lang="ts">
-// import * as dayjs from 'dayjs'
 import "@vuepic/vue-datepicker/dist/main.css";
 
+import type { ErrorObject } from "@vuelidate/core";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import { twMerge } from "tailwind-merge";
 
@@ -69,16 +69,16 @@ import ArrowLeftIcon from "@/assets/svg/arrow-left-icon.svg";
 import ArrowRightIcon from "@/assets/svg/arrow-right-icon.svg";
 import CalendarIcon from "@/assets/svg/calendar-icon.svg";
 
-interface Props {
+type Props = {
 	label: string;
 	name: string;
 	modelValue: number | null;
-	errorMessage?: string | null;
-}
+	error?: string | ErrorObject[] | null;
+};
 
 const props = withDefaults(defineProps<Props>(), {
+	error: null,
 	modelValue: 0,
-	errorMessage: "",
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -89,11 +89,12 @@ const attrs = useAttrs();
 
 const isOpen = ref<boolean>(false);
 
-const hasError = computed(() => {
-	if (props.errorMessage) {
-		return true;
-	}
-	return false;
+const hasError = computed(() => !!props.error?.length);
+
+const errorMessage = computed(() => {
+	if (typeof props.error === "string") return props.error;
+	else if (props.error?.length) return props.error[0].$message;
+	else return "";
 });
 
 const datePickerWrapperClasses = computed(() => {

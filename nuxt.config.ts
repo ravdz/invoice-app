@@ -46,12 +46,12 @@ export default defineNuxtConfig({
 		"@nuxt/test-utils/module",
 	],
 
-	css: ["~/assets/style/global.scss"],
+	css: ["@/assets/style/global.scss"],
 
 	colorMode: {
 		classSuffix: "",
 	},
 
-	plugins: ["~/plugins/dayjs.js", "~/plugins/clickOutside.js"],
+	plugins: ["@/plugins/dayjs.js", "@/plugins/clickOutside.js"],
 	compatibilityDate: "2024-12-15",
 });

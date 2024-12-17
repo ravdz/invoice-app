@@ -34,9 +34,9 @@ import Modal from "@/components/moleculs/Modal.vue";
 import { invoicesStore } from "@/store/invoices";
 import { modalsStore } from "@/store/modals";
 
-interface Props {
+type Props = {
 	invoiceId: string;
-}
+};
 
 const props = defineProps<Props>();
 

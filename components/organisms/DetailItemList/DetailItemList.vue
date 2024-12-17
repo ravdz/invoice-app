@@ -42,11 +42,11 @@ export default {
 import Heading from "@/components/atoms/Heading.vue";
 import Text from "@/components/atoms/Text.vue";
 import DetailsItem from "@/components/organisms/DetailItemList/partials/DetailsItem.vue";
-import type { FormItem } from "@/interfaces/invoice-form";
+import type { FormItem } from "@/types/invoice-form";
 
-interface Props {
+type Props = {
 	items: FormItem[];
-}
+};
 
 const props = defineProps<Props>();
 

@@ -55,12 +55,12 @@ export default {
 
 <script setup lang="ts">
 import Heading from "@/components/atoms/Heading.vue";
-import type { FormItem } from "@/interfaces/invoice-form";
+import type { FormItem } from "@/types/invoice-form";
 import { roundNumber } from "@/utils/helpers";
 
-interface Props {
+type Props = {
 	item: FormItem;
-}
+};
 
 const props = defineProps<Props>();
 

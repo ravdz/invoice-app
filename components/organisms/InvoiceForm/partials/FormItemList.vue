@@ -3,20 +3,12 @@
 		<Heading tag="h3" size="s" class="leading-3 text-blue-500 dark:text-blue-500">
 			Item list
 		</Heading>
-		<div class="mt-6 hidden items-center justify-center md:flex">
-			<Text tag="span" class="basis-4/12 leading-3"> Item Name </Text>
-			<Text tag="span" class="basis-2/12 px-4 leading-3"> Qty. </Text>
-			<Text tag="span" class="basis-3/12 pr-4 leading-3"> Price </Text>
-			<Text tag="span" class="basis-2/12 leading-3"> Total </Text>
-			<div class="basis-1/12 pl-4" />
-		</div>
 
 		<div class="mt-5 md:mt-3.5">
 			<FormItem
-				v-for="(item, index) in items"
+				v-for="item in modelValue"
 				:key="item.id"
-				:data="item"
-				:error-message="errorMessages.$each.$response.$errors[index]"
+				:item="item"
 				@remove="removeItem"
 				@update="updateItem"
 			/>
@@ -26,11 +18,9 @@
 			+ Add New Item
 		</Button>
 
-		<ul v-if="errors.length" class="mt-8">
-			<li v-for="(error, index) in errors" :key="index" class="text-xxs font-bold text-red-500">
-				- {{ error }}
-			</li>
-		</ul>
+		<div v-if="errorMessage" class="mt-8">
+			<span class="text-xxs font-bold text-red-500"> - {{ errorMessage }} </span>
+		</div>
 	</div>
 </template>
 
@@ -42,53 +32,56 @@ export default {
 </script>
 
 <script setup lang="ts">
+import type { ErrorObject } from "@vuelidate/core";
 import { v4 as uuidv4 } from "uuid";
 
 import Button from "@/components/atoms/Button.vue";
 import Heading from "@/components/atoms/Heading.vue";
-import Text from "@/components/atoms/Text.vue";
 import FormItem from "@/components/organisms/InvoiceForm/partials/FormItem.vue";
-import type { FormItem as FormItemType, UpdateItemType } from "@/interfaces/invoice-form";
+import type { FormItem as FormItemType, UpdateItemType } from "@/types/invoice-form";
 
-interface Props {
-	items: FormItemType[];
-	errorMessages: any;
-}
+type Props = {
+	modelValue: FormItemType[];
+	errors?: ErrorObject[];
+};
 
 const props = defineProps<Props>();
 
-const emit = defineEmits(["add", "remove", "update"]);
+const emit = defineEmits(["update:modelValue"]);
 
-const errors = computed(() => {
-	const { $errors } = props.errorMessages;
-
-	if ($errors.length) {
-		if (typeof $errors[0].$message === "string") {
-			return [$errors[0].$message];
-		} else if ($errors[0].$message.length) {
-			const firstErrorArray = $errors[0].$message.find(
-				(errorArray: [] | string[]) => !!errorArray.length,
-			);
-			return [...new Set(firstErrorArray)];
-		}
-	}
-	return [];
+const errorMessage = computed(() => {
+	const { errors } = props;
+	if (errors?.length && typeof errors[0].$message === "string") return errors[0].$message;
+	return "";
 });
 
 const addItem = () => {
-	emit("add", {
-		id: uuidv4(),
-		name: "Item",
-		quantity: 1,
-		price: 0.01,
-	});
+	emit("update:modelValue", [
+		...props.modelValue,
+		{
+			id: uuidv4(),
+			name: "Item",
+			quantity: 1,
+			price: 0.01,
+		},
+	]);
 };
 
 const removeItem = (itemId: string) => {
-	emit("remove", itemId);
+	emit(
+		"update:modelValue",
+		props.modelValue.filter((item: FormItemType) => item.id !== itemId),
+	);
 };
 
 const updateItem = (data: UpdateItemType) => {
-	emit("update", data);
+	const { itemId, fieldName, fieldValue } = data;
+	const updatedItemList = props.modelValue.map((item) => {
+		if (item.id === itemId) {
+			return { ...item, [fieldName]: fieldValue };
+		}
+		return item;
+	});
+	emit("update:modelValue", updatedItemList);
 };
 </script>

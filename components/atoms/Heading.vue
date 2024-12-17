@@ -14,10 +14,10 @@ export default {
 <script setup lang="ts">
 import { twMerge } from "tailwind-merge";
 
-interface Props {
+type Props = {
 	tag: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "span" | "p";
 	size: "s" | "m" | "l";
-}
+};
 const props = defineProps<Props>();
 
 const attrs = useAttrs();
